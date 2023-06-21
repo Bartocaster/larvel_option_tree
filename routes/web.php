@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OptionTreeController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +24,8 @@ Route::get('/', function () {
 Route::get('/tree', function () {
     return view('tree',[ItemController::class, 'index']);
 });
+// Route::get('/option-tree', [OptionTreeController::class, 'showOptionTree'])->name('option-tree');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
