@@ -47,34 +47,47 @@
 //     return $select;
 // }
 
+$input = "";
 function generateSelectBoxes($array, $input='', $level = 0) {
     print_r($input);
     echo '<pre>'; var_dump($input); echo '</pre>';
     $select = '<select class="select-box" data-level='.$level.'>
             <option value="">Select Option</option>';
-        // possilbe if statment could bring me far.
         $select2 = '<select class="select-box" data-level=1>
             <option value="">Select Option</option>';
             $select3 = '<select class="select-box" data-level=2>
             <option value="">Select Option</option>';
                 $select4 = '<select class="select-box" data-level=3>
                 <option value="">Select Option</option>';
-    
-             
+   
+    // this was the last part i was building seeing my mystake that i shouldn't have build it this way.  
     foreach ($array as $key => $value) {
+        if($input == "A"){
+            $key = $input;
+            echo $key;
+                } elseif($input == "B"){
+                    $key = $input;
+                    echo $key;
+                } elseif($input == "C"){
+                    $key = $input;
+                    echo $key;
+                } 
         // echo '<pre>'; var_dump($value); echo '</pre>';
-  
+    
         // $select .= '<option value="' . $key . '" ' . $select . '>' . $key . '</option>';
         $select .= '<option value='.$key.'>';
         $select .= $key;
         $select .='</option>';
         // print_r($key);
-        
+        // Idea was to make the loop eliminated the chooise depending what tree you go down to.
+        // but i have trouble figureing out how this framework makes functions calls
+  
         foreach ($array[$key] as $lvl1 => $lvl1_val) {
             // echo '<pre>'; var_dump($array[$key]); echo '</pre>';
             $select2 .= '<option value='.$lvl1.'>';
             $select2 .= $lvl1;
             $select2 .='</option>';
+            
 
             if(is_array($array[$key][$lvl1])){
                 foreach ($array[$key][$lvl1] as $lvl2 => $lvl2_val) {
@@ -97,7 +110,6 @@ function generateSelectBoxes($array, $input='', $level = 0) {
              
 
         }
-
     
     }
     // might not have paid enaf attention how they are going to be return.
@@ -138,15 +150,16 @@ function generateSelectBoxes($array, $input='', $level = 0) {
         <hr/>
         <h1>Assignment</h1>
         <p>
-            <?php echo generateSelectBoxes($array); ?>
+            <?php echo generateSelectBoxes($array,$input); ?>
         </p>
     </div>
     <!-- I haven't done alot of JAVA. can i make this connected in a short time span? 
     OK so if A get selected only 2, 4, 6 should be present.
     -->
     <script>
+    var treeArray = <?php echo json_encode($array); ?>;
     const selectBoxes = document.querySelectorAll('.select-box');
-    console.log(selectBoxes);
+    // console.log(selectBoxes);
     selectBoxes.forEach((selectBox) => {
         // oke so with this i should have added a eventlister there i should be able te use generateSelectBoxes function to recreated the tree.
         selectBox.addEventListener('change', function() {
@@ -158,8 +171,26 @@ function generateSelectBoxes($array, $input='', $level = 0) {
             // console.log(selectBox);// this registrade what you have selected.
             // how am i gonne make a ajax cal here?
             // not sure if i have Jquerry installed.
-            if(selectedValue == "A"|| "B" || "C"){
+            
+            
+            if(selectedValue == ("A"||"B"||"C")){
                 console.log(selectedValue);
+                // console.log(treeArray);
+                // jQuery.ajax({
+                //         type: "POST",
+                //         url: 'http://127.0.0.1:8000/tree',
+                //         dataType: 'json',
+                //         data: {functionname: 'generateSelectBoxes', arguments: [treeArray, selectedValue]},
+
+                //         success: function (obj, textstatus) {
+                //                     if( !('error' in obj) ) {
+                //                         yourVariable = obj.result;
+                //                     }
+                //                     else {
+                //                         console.log(obj.error);
+                //                     }
+                //                 }
+                //     });
                
             }
             // Disable lower select boxes if no compatible options
